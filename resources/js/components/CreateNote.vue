@@ -29,20 +29,23 @@
 </template>
 
 <script>
+import { EThree } from "@virgilsecurity/e3kit-browser";
+import findUserPublicKey from "../functions/findUserPublicKey.js";
+
 export default {
     data: () => {
         return {
             content: ""
         };
     },
-    mounted() {
-        console.log("Example mounted.");
-    },
+    mounted() {},
     methods: {
-        store() {
+        async store() {
+            // const publicKeys = await eThree.findUsers([appUser.email]);
+            const content = await eThree.authEncrypt(this.content);
             axios
                 .post("/api/notes", {
-                    content: this.content
+                    content
                 })
                 .then(response => {
                     this.content = "";

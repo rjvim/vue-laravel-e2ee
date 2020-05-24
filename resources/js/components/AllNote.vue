@@ -11,7 +11,9 @@
                             </thead>
                             <tbody>
                                 <tr v-for="note in notes" :key="note.id">
-                                    <td>{{ note.content }}</td>
+                                    <td style="word-break: break-all">
+                                        {{ note.decrypted }}
+                                    </td>
                                     <td>
                                         <button
                                             class="btn btn-danger btn-sm"
@@ -31,6 +33,9 @@
 </template>
 
 <script>
+import decrypt from "../functions/decrypt.js";
+import findUserPublicKey from "../functions/findUserPublicKey.js";
+
 export default {
     data: () => {
         return {
@@ -45,11 +50,20 @@ export default {
         });
     },
     methods: {
-        fetch() {
+        async fetch() {
+            // const publicKeys = await eThree.findUsers(appUser.email);
+
+            this.notes = [];
+
             axios
                 .get("/api/notes")
                 .then(response => {
-                    this.notes = response.data.data;
+                    response.data.data.forEach(async note => {
+                        note["decrypted"] = await eThree.authDecrypt(
+                            note.content
+                        );
+                        this.notes.push(note);
+                    });
                 })
                 .catch();
         },

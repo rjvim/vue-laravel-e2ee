@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<create-note></create-note>
-<all-note></all-note>
+<layout></layout>
 @endsection

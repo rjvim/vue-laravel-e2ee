@@ -10,6 +10,10 @@ window.Vue = require("vue");
 
 window.Bus = new Vue();
 
+window.appUser = null;
+window.virgilUser = null;
+window.eThree = null;
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,13 +25,7 @@ window.Bus = new Vue();
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component(
-    "example-component",
-    require("./components/ExampleComponent.vue").default
-);
-Vue.component("create-note", require("./components/CreateNote.vue").default);
-
-Vue.component("all-note", require("./components/AllNote.vue").default);
+import Layout from "./components/Layout.vue";
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -37,4 +35,18 @@ Vue.component("all-note", require("./components/AllNote.vue").default);
 
 const app = new Vue({
     el: "#app",
+    components: {
+        Layout,
+    },
+
+    methods: {
+        logout() {
+            axios.post("/logout").then((response) => {
+                eThree
+                    .cleanup()
+                    .then(() => (window.location.href = "/login"))
+                    .catch((e) => console.error("error: ", e));
+            });
+        },
+    },
 });

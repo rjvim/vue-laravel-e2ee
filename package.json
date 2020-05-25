@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@virgilsecurity/e3kit-browser": "^2.3.1",
-        "file-loader": "^6.0.0"
+        "file-loader": "^6.0.0",
+        "openpgp": "^4.10.4"
     }
 }

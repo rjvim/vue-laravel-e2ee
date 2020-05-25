@@ -1,108 +1,105 @@
 <template>
-  <div v-if="ready"></div>
+    <div>
+        <div v-if="user">
+            <div v-if="encryptionPassword && publicKey">
+                <router-view></router-view>
+            </div>
+            <div v-else>
+                <div v-if="encryptionPassword">
+                    <PublicKey />
+                </div>
+                <div v-else>
+                    <BackupPassword />
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import getUser from "../functions/getUser.js";
-import getVirgilToken from "../functions/getVirgilToken.js";
-import initializeEThree from "../functions/initializeEThree.js";
-import registerUser from "../functions/registerUser.js";
-import unregisterUser from "../functions/unregisterUser.js";
-import findUserPublicKey from "../functions/findUserPublicKey.js";
-import CreateNote from "./CreateNote";
-import AllNote from "./AllNote";
-import { EThree } from "@virgilsecurity/e3kit-browser";
+import { mapState } from "vuex";
 const openpgp = require("openpgp");
+import BackupPassword from "./BackupPassword.vue";
+import PublicKey from "./PublicKey.vue";
 
 export default {
-  data: () => {
-    return {
-      ready: false
-    };
-  },
-  components: {
-    CreateNote,
-    AllNote
-  },
+    data: () => {
+        return {
+            ready: false
+        };
+    },
 
-  async mounted() {
-    // First register user
+    components: {
+        BackupPassword,
+        PublicKey
+    },
 
-    // Ask user for password
+    computed: mapState({
+        user: state => state.user.user,
+        encryptionPassword: state => state.user.encryptionPassword,
+        publicKey: state => state.user.publicKey,
+        privateKey: state => state.user.privateKey
+    }),
 
-    // Backup to virgil
-    appUser = await getUser();
-    // let virgilToken = await getVirgilToken();
-    // eThree = await initializeEThree(virgilToken);
-    // await registerUser(virgilToken);
-    // const hasLocalPrivateKey = await eThree.hasLocalPrivateKey();
+    mounted() {},
 
-    // console.log("hasLocalPrivateKey", hasLocalPrivateKey);
+    methods: {
+        async pgp() {
+            const {
+                privateKeyArmored,
+                publicKeyArmored
+            } = await openpgp.generateKey({
+                userIds: [{ email: "jon@example.com" }], // you can pass multiple user IDs
+                curve: "curve25519" // ECC curve name
+            });
 
-    // await unregisterUser();
-    // const publicKeys = await eThree.findUsers([appUser.email]);
+            // console.log(privateKeyArmored); // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
+            // console.log(publicKeyArmored); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
 
-    // const { loginPassword, backupPassword } = await EThree.derivePasswords(
-    //     "password"
-    // );
+            let encoded = window.btoa(privateKeyArmored);
 
-    // console.log(loginPassword, backupPassword);
+            console.log(encoded);
+            console.log(window.atob(encoded));
 
-    this.ready = true;
-    Bus.$emit("virgilReady");
-    this.pgp();
-  },
+            //   const privateKey = (await openpgp.key.readArmored([privateKeyArmored]))
+            //     .keys[0];
 
-  methods: {
-    async pgp() {
-      const { privateKeyArmored, publicKeyArmored } = await openpgp.generateKey(
-        {
-          curve: "ed25519" // ECC curve name
+            //   const encrypted = await openpgp.encrypt({
+            //     message: openpgp.message.fromText("Hello World, Rajiv"), // input as Message object
+            //     publicKeys: (await openpgp.key.readArmored(publicKeyArmored)).keys
+            //   });
+
+            //   const ciphertext = encrypted.data;
+
+            //   console.log(ciphertext);
+
+            //   const decrypted = await openpgp.decrypt({
+            //     message: await openpgp.message.readArmored(ciphertext),
+            //     privateKeys: [privateKey]
+            //   });
+
+            //   const plaintext = await openpgp.stream.readToEnd(decrypted.data);
+
+            //   console.log(plaintext);
+
+            //   console.log("encrypt");
+            //   const { message } = await openpgp.encrypt({
+            //     message: openpgp.message.fromText("Hello World, Rajiv"),
+            //     passwords: ["secret stuff"],
+            //     armor: false
+            //   });
+            //   const encrypted = message.packets.write();
+            //   console.log("encrypted", encrypted);
+            //   const { data: decrypted } = await openpgp.decrypt({
+            //     message: await openpgp.message.read(encrypted), // parse encrypted bytes
+            //     passwords: ["secret stuff"]
+            //   });
+            //   console.log(decrypted); // Uint8Array([0x01, 0x01, 0x01])
         }
-      );
+    },
 
-      console.log(privateKeyArmored); // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
-      console.log(publicKeyArmored); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
-
-      //   const privateKey = (await openpgp.key.readArmored([privateKeyArmored]))
-      //     .keys[0];
-
-      //   const encrypted = await openpgp.encrypt({
-      //     message: openpgp.message.fromText("Hello World, Rajiv"), // input as Message object
-      //     publicKeys: (await openpgp.key.readArmored(publicKeyArmored)).keys
-      //   });
-
-      //   const ciphertext = encrypted.data;
-
-      //   console.log(ciphertext);
-
-      //   const decrypted = await openpgp.decrypt({
-      //     message: await openpgp.message.readArmored(ciphertext),
-      //     privateKeys: [privateKey]
-      //   });
-
-      //   const plaintext = await openpgp.stream.readToEnd(decrypted.data);
-
-      //   console.log(plaintext);
-
-      //   console.log("encrypt");
-      //   const { message } = await openpgp.encrypt({
-      //     message: openpgp.message.fromText("Hello World, Rajiv"),
-      //     passwords: ["secret stuff"],
-      //     armor: false
-      //   });
-      //   const encrypted = message.packets.write();
-      //   console.log("encrypted", encrypted);
-      //   const { data: decrypted } = await openpgp.decrypt({
-      //     message: await openpgp.message.read(encrypted), // parse encrypted bytes
-      //     passwords: ["secret stuff"]
-      //   });
-      //   console.log(decrypted); // Uint8Array([0x01, 0x01, 0x01])
+    async destroyed() {
+        console.log("Destroyed");
     }
-  },
-
-  async destroyed() {
-    console.log("Destroyed");
-  }
 };
 </script>

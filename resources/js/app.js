@@ -7,46 +7,29 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
-
 window.Bus = new Vue();
-
-window.appUser = null;
-window.virgilUser = null;
-window.eThree = null;
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+import router from "./routes";
+import store from "./store/index.js";
 import Layout from "./components/Layout.vue";
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
 
 const app = new Vue({
     el: "#app",
+    store,
+    router,
     components: {
-        Layout,
+        Layout
+    },
+
+    async mounted() {
+        await this.$store.dispatch("user/getUser");
+        console.log("Loaded app");
     },
 
     methods: {
         logout() {
-            axios.post("/logout").then((response) => {
-                eThree
-                    .cleanup()
-                    .then(() => (window.location.href = "/login"))
-                    .catch((e) => console.error("error: ", e));
+            axios.post("/logout").then(response => {
+                window.location.href = "/login";
             });
-        },
-    },
+        }
+    }
 });

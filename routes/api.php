@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,6 @@ Route::middleware('auth:api')->get('/virgil-token', function (Request $request) 
     return $JWTGenerator->generate(request()->user()->email);
 });
 
-
+Route::post('update-user-keys', 'UserKeysController@update')->middleware('auth:api');
 
 Route::resource('notes', 'NoteController')->middleware('auth:api');

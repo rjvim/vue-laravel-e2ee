@@ -26,6 +26,8 @@
     "dependencies": {
         "@virgilsecurity/e3kit-browser": "^2.3.1",
         "file-loader": "^6.0.0",
-        "openpgp": "^4.10.4"
+        "openpgp": "^4.10.4",
+        "vue-router": "^3.2.0",
+        "vuex": "^3.4.0"
     }
 }

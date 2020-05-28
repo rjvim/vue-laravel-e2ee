@@ -2688,7 +2688,7 @@ var openpgp = __webpack_require__(/*! openpgp */ "./node_modules/openpgp/dist/op
               _this.$store.dispatch("user/clearEncryptionData");
 
             case 21:
-              _context.next = 36;
+              _context.next = 37;
               break;
 
             case 23:
@@ -2720,10 +2720,11 @@ var openpgp = __webpack_require__(/*! openpgp */ "./node_modules/openpgp/dist/op
               });
 
             case 34:
-              _context.next = 36;
+              window.location.reload(true);
+              _context.next = 37;
               return _this.$store.dispatch("user/getUser");
 
-            case 36:
+            case 37:
             case "end":
               return _context.stop();
           }

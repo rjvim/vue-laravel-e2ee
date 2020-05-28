@@ -12,6 +12,14 @@ class Note extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'content',
+        'user_id', 'content','title'
     ];
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User')->withPivot(['role'])->withTimestamps();
+    }
 }

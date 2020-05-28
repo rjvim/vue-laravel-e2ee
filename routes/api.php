@@ -26,5 +26,7 @@ Route::middleware('auth:api')->get('/virgil-token', function (Request $request) 
 });
 
 Route::post('update-user-keys', 'UserKeysController@update')->middleware('auth:api');
+Route::post('share-note', 'ShareController@get')->middleware('auth:api');
+Route::post('get-keys', 'ShareController@keys')->middleware('auth:api');
 
 Route::resource('notes', 'NoteController')->middleware('auth:api');

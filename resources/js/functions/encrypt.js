@@ -1,29 +1,18 @@
-import { EThree } from "@virgilsecurity/e3kit-browser";
+const openpgp = require("openpgp");
 
-export default function(text, recipientPublicKey) {
+export default function(pubKeys, text) {
+    console.log("Calling encrypt", pubKeys, text);
+
     return new Promise(async (resolve, reject) => {
-        let benchmarking = false;
-        let encryptedText = null;
-        let repetitions = benchmarking ? 100 : 1;
+        let publicKeysPromises = pubKeys.map(async key => {
+            return (await openpgp.key.readArmored(key)).keys[0];
+        });
 
-        const then = new Date();
-        try {
-            for (let i = 0; i < repetitions; i++) {
-                encryptedText = await eThree.authEncrypt(text);
-            }
-            let time = (new Date() - then) / repetitions;
-            // console.log(
-            //     `Encrypted and signed: '${encryptedText}'. Took: ${time}ms`
-            // );
+        let encrypted = await openpgp.encrypt({
+            message: openpgp.message.fromText(text),
+            publicKeys: await Promise.all(publicKeysPromises)
+        });
 
-            // console.log(
-            //     `Encrypted and signed: '${encryptedText}'. Took: ${time}ms`
-            // );
-        } catch (err) {
-            this.log(`Failed encrypting and signing: ${err}`);
-            reject();
-        }
-
-        resolve(encryptedText);
+        resolve(window.btoa(encrypted.data));
     });
 }

@@ -22,7 +22,6 @@ const app = new Vue({
 
     async mounted() {
         await this.$store.dispatch("user/getUser");
-        console.log("Loaded app");
     },
 
     methods: {

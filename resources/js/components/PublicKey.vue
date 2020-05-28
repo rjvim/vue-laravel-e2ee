@@ -74,6 +74,8 @@ export default {
                 public_key: window.btoa(publicKeyArmored),
                 private_key: window.btoa(encryptedPrivateKey.data)
             });
+
+            await this.$store.dispatch("user/getUser");
         }
     },
 

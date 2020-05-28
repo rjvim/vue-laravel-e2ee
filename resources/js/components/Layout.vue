@@ -43,60 +43,7 @@ export default {
 
     mounted() {},
 
-    methods: {
-        async pgp() {
-            const {
-                privateKeyArmored,
-                publicKeyArmored
-            } = await openpgp.generateKey({
-                userIds: [{ email: "jon@example.com" }], // you can pass multiple user IDs
-                curve: "curve25519" // ECC curve name
-            });
-
-            // console.log(privateKeyArmored); // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
-            // console.log(publicKeyArmored); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
-
-            let encoded = window.btoa(privateKeyArmored);
-
-            console.log(encoded);
-            console.log(window.atob(encoded));
-
-            //   const privateKey = (await openpgp.key.readArmored([privateKeyArmored]))
-            //     .keys[0];
-
-            //   const encrypted = await openpgp.encrypt({
-            //     message: openpgp.message.fromText("Hello World, Rajiv"), // input as Message object
-            //     publicKeys: (await openpgp.key.readArmored(publicKeyArmored)).keys
-            //   });
-
-            //   const ciphertext = encrypted.data;
-
-            //   console.log(ciphertext);
-
-            //   const decrypted = await openpgp.decrypt({
-            //     message: await openpgp.message.readArmored(ciphertext),
-            //     privateKeys: [privateKey]
-            //   });
-
-            //   const plaintext = await openpgp.stream.readToEnd(decrypted.data);
-
-            //   console.log(plaintext);
-
-            //   console.log("encrypt");
-            //   const { message } = await openpgp.encrypt({
-            //     message: openpgp.message.fromText("Hello World, Rajiv"),
-            //     passwords: ["secret stuff"],
-            //     armor: false
-            //   });
-            //   const encrypted = message.packets.write();
-            //   console.log("encrypted", encrypted);
-            //   const { data: decrypted } = await openpgp.decrypt({
-            //     message: await openpgp.message.read(encrypted), // parse encrypted bytes
-            //     passwords: ["secret stuff"]
-            //   });
-            //   console.log(decrypted); // Uint8Array([0x01, 0x01, 0x01])
-        }
-    },
+    methods: {},
 
     async destroyed() {
         console.log("Destroyed");

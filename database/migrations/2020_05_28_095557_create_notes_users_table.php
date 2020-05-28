@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNotesTable extends Migration
+class CreateNotesUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateNotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('notes', function (Blueprint $table) {
-            $table->id();
-
-            $table->text('title');
-            $table->text('content');
+        Schema::create('note_user', function (Blueprint $table) {
+            $table->integer('note_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->string('role')->default('member');
 
             $table->timestamps();
         });
@@ -30,6 +29,6 @@ class CreateNotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notes');
+        Schema::dropIfExists('note_user');
     }
 }

@@ -1,21 +1,38 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="privateKey">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Dashboard Component</div>
-
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
+            <div class="col-md-12">
+                <CreateNote />
             </div>
         </div>
+
+        <AllNote
+            :private-key="privateKey"
+            :public-key="publicKey"
+            :user="user"
+        />
     </div>
 </template>
 
 <script>
+const openpgp = require("openpgp");
+import CreateNote from "./CreateNote";
+import AllNote from "./AllNote";
+import { mapState } from "vuex";
+
 export default {
-    mounted() {}
+    components: {
+        CreateNote,
+        AllNote
+    },
+
+    computed: mapState({
+        user: state => state.user.user,
+        encryptionPassword: state => state.user.encryptionPassword,
+        publicKey: state => state.user.publicKey,
+        privateKey: state => state.user.privateKey
+    }),
+
+    async mounted() {}
 };
 </script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Note;
+use App\User;
 use App\Http\Resources\Note as NoteResource;
 use App\Http\Requests\StoreNote;
 
@@ -16,7 +17,11 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return NoteResource::collection(Note::where('user_id', request()->user()->id)->get());
+        // return request()->user()->notes;
+
+        // return Note::with('users')->get();
+
+        return NoteResource::collection(request()->user()->notes()->with('users')->get());
     }
 
     /**
@@ -39,10 +44,15 @@ class NoteController extends Controller
     {
         $validated = $request->validated();
 
-        return Note::create([
+        $note = Note::create([
             'content' => $validated['content'],
-            'user_id' => request()->user()->id
+            'title' => $validated['title']
         ]);
+
+        $note->users()->attach($request->user()->id, ['role' => 'owner']);
+
+
+        return $note;
     }
 
     /**
@@ -53,7 +63,9 @@ class NoteController extends Controller
      */
     public function show($id)
     {
-        //
+        // return Note::with('users')->where('id', $id)->firstOrFail();
+
+        return new NoteResource(Note::with('users')->where('id', $id)->firstOrFail());
     }
 
     /**
@@ -74,9 +86,22 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreNote $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        // return $request->all();
+
+        $note = Note::find($id);
+        $user = User::where('email', $request->access)->firstOrFail();
+
+        $note->title = $request->title;
+        $note->content = $request->content;
+        $note->save();
+
+        $note->users()->attach($user->id, ['role' => 'member']);
+
+        return new NoteResource(Note::with('users')->find($id));
     }
 
     /**
@@ -87,6 +112,8 @@ class NoteController extends Controller
      */
     public function destroy($id)
     {
+        $note = Note::find($id);
+        $note->users()->detach();
         Note::destroy($id);
         return [];
     }

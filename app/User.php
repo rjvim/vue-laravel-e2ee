@@ -37,4 +37,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function notes()
+    {
+        return $this->belongsToMany('App\Note')->withPivot(['role'])->withTimestamps();
+    }
 }

@@ -6,17 +6,32 @@
                     <div class="card-header">Create Note</div>
 
                     <div class="card-body">
-                        <textarea
-                            class="form-control"
-                            rows="5"
-                            v-model="content"
-                        ></textarea>
+                        <div class="form-group">
+                            <label for="title">Title *</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                v-model="title"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="content">Content *</label>
+                            <textarea
+                                type="text"
+                                class="form-control"
+                                id="content"
+                                v-model="content"
+                            >
+                            </textarea>
+                        </div>
                     </div>
 
                     <div class="card-footer">
                         <button
                             class="btn btn-primary"
-                            :disabled="content == ''"
+                            :disabled="content == '' || title == ''"
                             @click="store"
                         >
                             Create
@@ -29,26 +44,34 @@
 </template>
 
 <script>
-import { EThree } from "@virgilsecurity/e3kit-browser";
-import findUserPublicKey from "../functions/findUserPublicKey.js";
+import { mapState } from "vuex";
+import encrypt from "../functions/encrypt";
 
 export default {
     data: () => {
         return {
+            title: "",
             content: ""
         };
     },
     mounted() {},
+
+    computed: mapState({
+        publicKey: state => state.user.publicKey
+    }),
+
     methods: {
         async store() {
-            // const publicKeys = await eThree.findUsers([appUser.email]);
-            const content = await eThree.authEncrypt(this.content);
+            let payload = {};
+
+            payload["title"] = await encrypt([this.publicKey], this.title);
+            payload["content"] = await encrypt([this.publicKey], this.content);
+
             axios
-                .post("/api/notes", {
-                    content
-                })
+                .post("/api/notes", payload)
                 .then(response => {
                     this.content = "";
+                    this.title = "";
                     Bus.$emit("updateNotes");
                 })
                 .catch();

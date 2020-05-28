@@ -1911,6 +1911,317 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllNote.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AllNote.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _functions_decrypt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/decrypt */ "./resources/js/functions/decrypt.js");
+/* harmony import */ var _functions_encrypt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/encrypt */ "./resources/js/functions/encrypt.js");
+
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["privateKey", "publicKey", "user"],
+  data: function data() {
+    return {
+      notes: [],
+      note: null,
+      share: ""
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.fetch();
+    Bus.$on("updateNotes", function () {
+      _this.fetch();
+    });
+  },
+  methods: {
+    loadNote: function loadNote(note) {
+      var _this2 = this;
+
+      axios.get("/api/notes/".concat(note.id)).then( /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(response) {
+          var note, title, content;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  note = response.data.data;
+                  _context.next = 3;
+                  return Object(_functions_decrypt__WEBPACK_IMPORTED_MODULE_2__["default"])(_this2.privateKey, note.title);
+
+                case 3:
+                  title = _context.sent;
+                  _context.next = 6;
+                  return Object(_functions_decrypt__WEBPACK_IMPORTED_MODULE_2__["default"])(_this2.privateKey, note.content);
+
+                case 6:
+                  content = _context.sent;
+                  note.title = title;
+                  note.content = content;
+                  note.access.forEach(function (a) {
+                    if (a.email == _this2.user.email && a.role == "owner") {
+                      note.is_owner = true;
+                    }
+                  });
+                  _this2.note = note;
+
+                case 11:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }())["catch"]();
+    },
+    fetch: function fetch() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.notes = [];
+                axios.get("/api/notes").then(function (response) {
+                  response.data.data.forEach( /*#__PURE__*/function () {
+                    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(note, index) {
+                      var title, content;
+                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                        while (1) {
+                          switch (_context2.prev = _context2.next) {
+                            case 0:
+                              _context2.next = 2;
+                              return Object(_functions_decrypt__WEBPACK_IMPORTED_MODULE_2__["default"])(_this3.privateKey, note.title);
+
+                            case 2:
+                              title = _context2.sent;
+                              _context2.next = 5;
+                              return Object(_functions_decrypt__WEBPACK_IMPORTED_MODULE_2__["default"])(_this3.privateKey, note.content);
+
+                            case 5:
+                              content = _context2.sent;
+                              note.title = title;
+                              note.content = content;
+
+                              _this3.notes.push(note);
+
+                              if (index == 0) {
+                                _this3.loadNote(note);
+                              }
+
+                            case 10:
+                            case "end":
+                              return _context2.stop();
+                          }
+                        }
+                      }, _callee2);
+                    }));
+
+                    return function (_x2, _x3) {
+                      return _ref2.apply(this, arguments);
+                    };
+                  }());
+                })["catch"]();
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    destroy: function destroy(note) {
+      var _this4 = this;
+
+      axios["delete"]("/api/notes/".concat(note.id)).then(function (response) {
+        _this4.fetch();
+      })["catch"]();
+    },
+    update: function update(note, pubKeys, access) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var payload;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                payload = {};
+                pubKeys = pubKeys.map(function (p) {
+                  return window.atob(p);
+                });
+                _context4.next = 4;
+                return Object(_functions_encrypt__WEBPACK_IMPORTED_MODULE_3__["default"])(pubKeys, note.title);
+
+              case 4:
+                payload["title"] = _context4.sent;
+                _context4.next = 7;
+                return Object(_functions_encrypt__WEBPACK_IMPORTED_MODULE_3__["default"])(pubKeys, note.content);
+
+              case 7:
+                payload["content"] = _context4.sent;
+                payload["access"] = access;
+                axios.put("/api/notes/".concat(_this5.note.id), payload).then(function (response) {
+                  _this5.share = "";
+
+                  _this5.loadNote(_this5.note);
+                })["catch"]();
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    getKeys: function getKeys() {
+      var _this6 = this;
+
+      var emails = _toConsumableArray(this.note.access);
+
+      emails = emails.map(function (e) {
+        return e.email;
+      });
+      emails.push(this.share);
+      emails = emails.filter(function (v, i, a) {
+        return a.indexOf(v) === i;
+      });
+      axios.post("/api/get-keys", {
+        emails: emails
+      }).then(function (response) {
+        _this6.update(_this6.note, response.data, _this6.share);
+      })["catch"](function (err) {});
+    },
+    shareNote: function shareNote() {
+      var _this7 = this;
+
+      axios.post("/api/share-note", {
+        email: this.share
+      }).then(function (response) {
+        _this7.getKeys();
+      })["catch"](function (err) {
+        alert("no such user");
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BackupPassword.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/BackupPassword.vue?vue&type=script&lang=js& ***!
@@ -1977,6 +2288,125 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateNote.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateNote.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _functions_encrypt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../functions/encrypt */ "./resources/js/functions/encrypt.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      title: "",
+      content: ""
+    };
+  },
+  mounted: function mounted() {},
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    publicKey: function publicKey(state) {
+      return state.user.publicKey;
+    }
+  }),
+  methods: {
+    store: function store() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var payload;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                payload = {};
+                _context.next = 3;
+                return Object(_functions_encrypt__WEBPACK_IMPORTED_MODULE_2__["default"])([_this.publicKey], _this.title);
+
+              case 3:
+                payload["title"] = _context.sent;
+                _context.next = 6;
+                return Object(_functions_encrypt__WEBPACK_IMPORTED_MODULE_2__["default"])([_this.publicKey], _this.content);
+
+              case 6:
+                payload["content"] = _context.sent;
+                axios.post("/api/notes", payload).then(function (response) {
+                  _this.content = "";
+                  _this.title = "";
+                  Bus.$emit("updateNotes");
+                })["catch"]();
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=script&lang=js& ***!
@@ -1986,6 +2416,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _CreateNote__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateNote */ "./resources/js/components/CreateNote.vue");
+/* harmony import */ var _AllNote__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AllNote */ "./resources/js/components/AllNote.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2002,8 +2443,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+var openpgp = __webpack_require__(/*! openpgp */ "./node_modules/openpgp/dist/openpgp.js");
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {}
+  components: {
+    CreateNote: _CreateNote__WEBPACK_IMPORTED_MODULE_1__["default"],
+    AllNote: _AllNote__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])({
+    user: function user(state) {
+      return state.user.user;
+    },
+    encryptionPassword: function encryptionPassword(state) {
+      return state.user.encryptionPassword;
+    },
+    publicKey: function publicKey(state) {
+      return state.user.publicKey;
+    },
+    privateKey: function privateKey(state) {
+      return state.user.privateKey;
+    }
+  }),
+  mounted: function mounted() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }
 });
 
 /***/ }),
@@ -2077,84 +2553,21 @@ var openpgp = __webpack_require__(/*! openpgp */ "./node_modules/openpgp/dist/op
     }
   }),
   mounted: function mounted() {},
-  methods: {
-    pgp: function pgp() {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _yield$openpgp$genera, privateKeyArmored, publicKeyArmored, encoded;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return openpgp.generateKey({
-                  userIds: [{
-                    email: "jon@example.com"
-                  }],
-                  // you can pass multiple user IDs
-                  curve: "curve25519" // ECC curve name
-
-                });
-
-              case 2:
-                _yield$openpgp$genera = _context.sent;
-                privateKeyArmored = _yield$openpgp$genera.privateKeyArmored;
-                publicKeyArmored = _yield$openpgp$genera.publicKeyArmored;
-                // console.log(privateKeyArmored); // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
-                // console.log(publicKeyArmored); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
-                encoded = window.btoa(privateKeyArmored);
-                console.log(encoded);
-                console.log(window.atob(encoded)); //   const privateKey = (await openpgp.key.readArmored([privateKeyArmored]))
-                //     .keys[0];
-                //   const encrypted = await openpgp.encrypt({
-                //     message: openpgp.message.fromText("Hello World, Rajiv"), // input as Message object
-                //     publicKeys: (await openpgp.key.readArmored(publicKeyArmored)).keys
-                //   });
-                //   const ciphertext = encrypted.data;
-                //   console.log(ciphertext);
-                //   const decrypted = await openpgp.decrypt({
-                //     message: await openpgp.message.readArmored(ciphertext),
-                //     privateKeys: [privateKey]
-                //   });
-                //   const plaintext = await openpgp.stream.readToEnd(decrypted.data);
-                //   console.log(plaintext);
-                //   console.log("encrypt");
-                //   const { message } = await openpgp.encrypt({
-                //     message: openpgp.message.fromText("Hello World, Rajiv"),
-                //     passwords: ["secret stuff"],
-                //     armor: false
-                //   });
-                //   const encrypted = message.packets.write();
-                //   console.log("encrypted", encrypted);
-                //   const { data: decrypted } = await openpgp.decrypt({
-                //     message: await openpgp.message.read(encrypted), // parse encrypted bytes
-                //     passwords: ["secret stuff"]
-                //   });
-                //   console.log(decrypted); // Uint8Array([0x01, 0x01, 0x01])
-
-              case 8:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  },
+  methods: {},
   destroyed: function destroyed() {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context.prev = _context.next) {
             case 0:
               console.log("Destroyed");
 
             case 1:
             case "end":
-              return _context2.stop();
+              return _context.stop();
           }
         }
-      }, _callee2);
+      }, _callee);
     }))();
   }
 });
@@ -2275,7 +2688,7 @@ var openpgp = __webpack_require__(/*! openpgp */ "./node_modules/openpgp/dist/op
               _this.$store.dispatch("user/clearEncryptionData");
 
             case 21:
-              _context.next = 34;
+              _context.next = 36;
               break;
 
             case 23:
@@ -2307,6 +2720,10 @@ var openpgp = __webpack_require__(/*! openpgp */ "./node_modules/openpgp/dist/op
               });
 
             case 34:
+              _context.next = 36;
+              return _this.$store.dispatch("user/getUser");
+
+            case 36:
             case "end":
               return _context.stop();
           }
@@ -82321,6 +82738,184 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllNote.vue?vue&type=template&id=40183d18&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AllNote.vue?vue&type=template&id=40183d18& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container", staticStyle: { "margin-top": "20px" } },
+    [
+      _c("div", { staticClass: "row " }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", [
+              _c("table", { staticClass: "table" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.notes, function(note) {
+                    return _c("tr", { key: note.id }, [
+                      _c(
+                        "td",
+                        {
+                          staticStyle: { "word-break": "break-all" },
+                          on: {
+                            click: function($event) {
+                              return _vm.loadNote(note)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(note.title) +
+                              "\n                                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-sm",
+                            on: {
+                              click: function($event) {
+                                return _vm.destroy(note)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        Delete\n                                    "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.note
+          ? _c("div", { staticClass: "col-md-8" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _vm._v(_vm._s(_vm.note.title))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.note.content) +
+                      "\n\n                    "
+                  ),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("h6", [_vm._v("Access")]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    _vm._l(_vm.note.access, function(acc) {
+                      return _c("li", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(acc.email) +
+                            " - " +
+                            _vm._s(acc.role) +
+                            "\n                        "
+                        )
+                      ])
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _vm.note.is_owner
+                    ? _c("div", [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "share" } }, [
+                            _vm._v("Share *")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.share,
+                                expression: "share"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "email", id: "share" },
+                            domProps: { value: _vm.share },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.share = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { disabled: _vm.share == "" },
+                            on: { click: _vm.shareNote }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Share\n                        "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              ])
+            ])
+          : _vm._e()
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [_c("th", [_vm._v("Title")]), _vm._v(" "), _c("th")])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BackupPassword.vue?vue&type=template&id=ff86d1b0&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/BackupPassword.vue?vue&type=template&id=ff86d1b0& ***!
@@ -82393,6 +82988,104 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateNote.vue?vue&type=template&id=20dd5cb9&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateNote.vue?vue&type=template&id=20dd5cb9& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [_vm._v("Create Note")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "title" } }, [_vm._v("Title *")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.title,
+                    expression: "title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "title" },
+                domProps: { value: _vm.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.title = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "content" } }, [_vm._v("Content *")]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.content,
+                    expression: "content"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "content" },
+                domProps: { value: _vm.content },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.content = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { disabled: _vm.content == "" || _vm.title == "" },
+                on: { click: _vm.store }
+              },
+              [_vm._v("\n                        Create\n                    ")]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9& ***!
@@ -82408,32 +83101,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm.privateKey
+    ? _c(
+        "div",
+        { staticClass: "container" },
+        [
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c("div", { staticClass: "col-md-12" }, [_c("CreateNote")], 1)
+          ]),
+          _vm._v(" "),
+          _c("AllNote", {
+            attrs: {
+              "private-key": _vm.privateKey,
+              "public-key": _vm.publicKey,
+              user: _vm.user
+            }
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Dashboard Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -98954,9 +99643,6 @@ var app = new Vue({
               return _this.$store.dispatch("user/getUser");
 
             case 2:
-              console.log("Loaded app");
-
-            case 3:
             case "end":
               return _context.stop();
           }
@@ -99027,6 +99713,75 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/components/AllNote.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/AllNote.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AllNote_vue_vue_type_template_id_40183d18___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AllNote.vue?vue&type=template&id=40183d18& */ "./resources/js/components/AllNote.vue?vue&type=template&id=40183d18&");
+/* harmony import */ var _AllNote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AllNote.vue?vue&type=script&lang=js& */ "./resources/js/components/AllNote.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AllNote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AllNote_vue_vue_type_template_id_40183d18___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AllNote_vue_vue_type_template_id_40183d18___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AllNote.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AllNote.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/AllNote.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllNote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AllNote.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllNote.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllNote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AllNote.vue?vue&type=template&id=40183d18&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/AllNote.vue?vue&type=template&id=40183d18& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllNote_vue_vue_type_template_id_40183d18___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AllNote.vue?vue&type=template&id=40183d18& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllNote.vue?vue&type=template&id=40183d18&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllNote_vue_vue_type_template_id_40183d18___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllNote_vue_vue_type_template_id_40183d18___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/BackupPassword.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/BackupPassword.vue ***!
@@ -99091,6 +99846,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BackupPassword_vue_vue_type_template_id_ff86d1b0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BackupPassword_vue_vue_type_template_id_ff86d1b0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CreateNote.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/CreateNote.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateNote_vue_vue_type_template_id_20dd5cb9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateNote.vue?vue&type=template&id=20dd5cb9& */ "./resources/js/components/CreateNote.vue?vue&type=template&id=20dd5cb9&");
+/* harmony import */ var _CreateNote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateNote.vue?vue&type=script&lang=js& */ "./resources/js/components/CreateNote.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateNote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateNote_vue_vue_type_template_id_20dd5cb9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateNote_vue_vue_type_template_id_20dd5cb9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CreateNote.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CreateNote.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/CreateNote.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateNote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateNote.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateNote.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateNote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CreateNote.vue?vue&type=template&id=20dd5cb9&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/CreateNote.vue?vue&type=template&id=20dd5cb9& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateNote_vue_vue_type_template_id_20dd5cb9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateNote.vue?vue&type=template&id=20dd5cb9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateNote.vue?vue&type=template&id=20dd5cb9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateNote_vue_vue_type_template_id_20dd5cb9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateNote_vue_vue_type_template_id_20dd5cb9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -99300,6 +100124,163 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PublicKey_vue_vue_type_template_id_488a0e5b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/functions/decrypt.js":
+/*!*******************************************!*\
+  !*** ./resources/js/functions/decrypt.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var openpgp = __webpack_require__(/*! openpgp */ "./node_modules/openpgp/dist/openpgp.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function (privateKey, text) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(resolve, reject) {
+      var currentUserPrivateKey, title;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return openpgp.key.readArmored(privateKey);
+
+            case 2:
+              currentUserPrivateKey = _context.sent.keys[0];
+              _context.t0 = openpgp;
+              _context.next = 6;
+              return openpgp.message.readArmored(window.atob(text));
+
+            case 6:
+              _context.t1 = _context.sent;
+              _context.t2 = [currentUserPrivateKey];
+              _context.t3 = {
+                message: _context.t1,
+                privateKeys: _context.t2
+              };
+              _context.next = 11;
+              return _context.t0.decrypt.call(_context.t0, _context.t3);
+
+            case 11:
+              title = _context.sent;
+              _context.next = 14;
+              return openpgp.stream.readToEnd(title.data);
+
+            case 14:
+              title = _context.sent;
+              resolve(title);
+
+            case 16:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+});
+
+/***/ }),
+
+/***/ "./resources/js/functions/encrypt.js":
+/*!*******************************************!*\
+  !*** ./resources/js/functions/encrypt.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var openpgp = __webpack_require__(/*! openpgp */ "./node_modules/openpgp/dist/openpgp.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function (pubKeys, text) {
+  console.log("Calling encrypt", pubKeys, text);
+  return new Promise( /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(resolve, reject) {
+      var publicKeysPromises, encrypted;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              publicKeysPromises = pubKeys.map( /*#__PURE__*/function () {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(key) {
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          _context.next = 2;
+                          return openpgp.key.readArmored(key);
+
+                        case 2:
+                          return _context.abrupt("return", _context.sent.keys[0]);
+
+                        case 3:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee);
+                }));
+
+                return function (_x3) {
+                  return _ref2.apply(this, arguments);
+                };
+              }());
+              _context2.t0 = openpgp;
+              _context2.t1 = openpgp.message.fromText(text);
+              _context2.next = 5;
+              return Promise.all(publicKeysPromises);
+
+            case 5:
+              _context2.t2 = _context2.sent;
+              _context2.t3 = {
+                message: _context2.t1,
+                publicKeys: _context2.t2
+              };
+              _context2.next = 9;
+              return _context2.t0.encrypt.call(_context2.t0, _context2.t3);
+
+            case 9:
+              encrypted = _context2.sent;
+              resolve(window.btoa(encrypted.data));
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+});
 
 /***/ }),
 

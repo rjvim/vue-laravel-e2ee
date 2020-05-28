@@ -2270,19 +2270,17 @@ __webpack_require__.r(__webpack_exports__);
       encryption: ""
     };
   },
-  mounted: function mounted() {
-    if (localStorage.encryptionPassword) {
-      this.$store.dispatch("user/setEncryptionPassword", {
-        encryptionPassword: localStorage.encryptionPassword
-      });
-    }
+  mounted: function mounted() {// if (localStorage.encryptionPassword) {
+    //     this.$store.dispatch("user/setEncryptionPassword", {
+    //         encryptionPassword: localStorage.encryptionPassword
+    //     });
+    // }
   },
   methods: {
     savePassword: function savePassword() {
       this.$store.dispatch("user/setEncryptionPassword", {
         encryptionPassword: this.encryption
-      });
-      localStorage.encryptionPassword = this.encryption;
+      }); // localStorage.encryptionPassword = this.encryption;
     }
   }
 });

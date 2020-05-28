@@ -39,11 +39,11 @@ export default {
     },
 
     mounted() {
-        if (localStorage.encryptionPassword) {
-            this.$store.dispatch("user/setEncryptionPassword", {
-                encryptionPassword: localStorage.encryptionPassword
-            });
-        }
+        // if (localStorage.encryptionPassword) {
+        //     this.$store.dispatch("user/setEncryptionPassword", {
+        //         encryptionPassword: localStorage.encryptionPassword
+        //     });
+        // }
     },
 
     methods: {
@@ -51,7 +51,7 @@ export default {
             this.$store.dispatch("user/setEncryptionPassword", {
                 encryptionPassword: this.encryption
             });
-            localStorage.encryptionPassword = this.encryption;
+            // localStorage.encryptionPassword = this.encryption;
         }
     }
 };

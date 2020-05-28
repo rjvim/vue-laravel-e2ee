@@ -2021,6 +2021,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -82867,7 +82868,11 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "email", id: "share" },
+                            attrs: {
+                              type: "email",
+                              id: "share",
+                              placeholder: "Input valid email address"
+                            },
                             domProps: { value: _vm.share },
                             on: {
                               input: function($event) {

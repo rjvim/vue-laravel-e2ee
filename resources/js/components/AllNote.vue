@@ -58,6 +58,7 @@
                                     class="form-control"
                                     id="share"
                                     v-model="share"
+                                    placeholder="Input valid email address"
                                 />
                             </div>
 
